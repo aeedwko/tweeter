@@ -1,0 +1,9 @@
+/* height of header itself is 400px; accounts for height of nav */
+header {
+  height: 520px; 
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;;
+  align-items: center;
+}
