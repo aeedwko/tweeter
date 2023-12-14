@@ -1,0 +1,32 @@
+  .new-tweet {
+    width: 100%;
+  }
+
+  .new-tweet > form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between
+  }
+  
+  .new-tweet > form > textarea {
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid;
+    outline: none; /* removes the blue outline around textarea when clicked into*/
+    resize: none;
+  }
+
+  .new-tweet > form > div {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 0.5em;
+    font-family: 'Bungee', sans-serif;
+    font-size: 20px;
+  }
+
+  .new-tweet > form > div > button {
+    background-color: #4056A1;
+    color: #FFFFFF;
+    border: none;
+    padding: 0.3em 0.6em;
+  }
