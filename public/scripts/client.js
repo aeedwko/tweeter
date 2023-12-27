@@ -3,6 +3,7 @@
  * jQuery is already loaded
  * Reminder: Use (and do all your DOM work in) jQuery's document ready function
  */
+
 $(document).ready(() => {
 
   // GET request for all 
@@ -32,7 +33,8 @@ $(document).ready(() => {
   $("form").on("submit", function(event) {
     event.preventDefault();
     
-    $.post("/tweets", $(this).serialize());
+    $.post("/tweets", $(this).serialize(), () => {
+    });
   });
 });
 
@@ -45,6 +47,8 @@ const renderTweets = function(tweets) {
 };
 
 const createTweetElement = function(data) {
+  console.log(timeago.format(data.created_at));
+
   return $(
     `<article class="tweet">
   <header>
@@ -57,6 +61,7 @@ const createTweetElement = function(data) {
   <article>${data.content.text}</article>
   <footer>
     <span>${data.created_at}</span>
+    <span>${timeago.format(data.created_at, "en_US")}</span>
     <div>
       <a href=""><i class="fa-solid fa-flag"></i></a>
       <a href=""><i class="fa-solid fa-retweet"></i></a>
