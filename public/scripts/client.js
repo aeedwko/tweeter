@@ -30,11 +30,20 @@ $(document).ready(() => {
     $(this).removeClass("hovered-icon");
   });
 
+  // post tweet to server on submit
   $("form").on("submit", function(event) {
     event.preventDefault();
     
-    $.post("/tweets", $(this).serialize(), () => {
-    });
+    const tweet = $("form #tweet-text").val();
+
+    if (tweet.length > 140) {
+      alert("The tweet exceeds the 140 character limit.");
+    } else if (tweet.length === 0) {
+      alert("The tweet area is empty.")
+    } else {
+      $.post("/tweets", $(this).serialize(), () => {
+      }); 
+    }
   });
 });
 
@@ -47,8 +56,6 @@ const renderTweets = function(tweets) {
 };
 
 const createTweetElement = function(data) {
-  console.log(timeago.format(data.created_at));
-
   return $(
     `<article class="tweet">
   <header>
@@ -60,8 +67,7 @@ const createTweetElement = function(data) {
   </header>
   <article>${data.content.text}</article>
   <footer>
-    <span>${data.created_at}</span>
-    <span>${timeago.format(data.created_at, "en_US")}</span>
+    <span>${timeago.format(data.created_at)}</span>
     <div>
       <a href=""><i class="fa-solid fa-flag"></i></a>
       <a href=""><i class="fa-solid fa-retweet"></i></a>
