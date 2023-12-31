@@ -73,8 +73,9 @@ $(document).ready(() => {
       $.post("/tweets", $(this).serialize(), () => {
       
         $("#tweet-error").slideUp();
-        // resets the tweet input once post request is finished and reloads tweets
+        // resets the tweet input and character count once post request is finished and reloads tweets
         $("#tweet-text").val("");
+        $(".counter").val(140);
         loadTweets();
       }); 
     }
