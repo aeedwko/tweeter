@@ -16,7 +16,7 @@ $(document).ready(() => {
       </div>          
       <span>${data.user.handle}</span>
     </header>
-    <article>${data.content.text}</article>
+    <article>${escape(data.content.text)}</article>
     <footer>
       <span>${timeago.format(data.created_at)}</span>
       <div>
@@ -45,6 +45,17 @@ $(document).ready(() => {
     })
   }
 
+  const displayError = function(errorText) {
+
+    // change text after sliding up in case different validation failed
+    // 400 is the default animation speed
+    $("#tweet-error").slideUp(400, () => {
+      $("#tweet-error").text(errorText).slideDown();
+    });
+  }
+
+  // hide tweet error and load tweets on browser open/refresh 
+  $("#tweet-error").hide();
   loadTweets();
 
   // listen for post tweet to server on submit
@@ -54,11 +65,14 @@ $(document).ready(() => {
     const tweet = $("form #tweet-text").val();
 
     if (tweet.length > 140) {
-      alert("The tweet exceeds the 140 character limit.");
+      displayError("The tweet exceeds the 140 character limit.");
     } else if (tweet.length === 0) {
-      alert("The tweet area is empty.")
+      displayError("The tweet area is empty.");
     } else {
       $.post("/tweets", $(this).serialize(), () => {
+      
+        $("#tweet-error").slideUp();
+        // resets the tweet input once post request is finished and reloads tweets
         $("#tweet-text").val("");
         loadTweets();
       }); 
@@ -78,4 +92,11 @@ $(document).ready(() => {
   }).on("mouseleave", function() {
     $(this).removeClass("hovered-icon");
   });
+
+  // escape function for preventing XSS
+  const escape = function (str) {
+    let div = document.createElement("div");
+    div.appendChild(document.createTextNode(str));
+    return div.innerHTML;
+  };
 });
