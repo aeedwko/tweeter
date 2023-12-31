@@ -6,6 +6,7 @@
 
 $(document).ready(() => {
 
+  // dynamically created HTML element 
   const createTweetElement = function(data) {
     return $(
       `<article class="tweet">
@@ -29,6 +30,7 @@ $(document).ready(() => {
   `);
   };
 
+  // loop through all available tweets and add them to tweet container
   const renderTweets = function(tweets) {
     $("#tweets-container").empty(); 
 
@@ -38,7 +40,7 @@ $(document).ready(() => {
     }
   };
   
-  // GET request for all 
+  // GET request for all tweets
   const loadTweets = () => {
     $.get("/tweets", (data) => {
       renderTweets(data);
@@ -46,7 +48,6 @@ $(document).ready(() => {
   }
 
   const displayError = function(errorText) {
-
     // change text after sliding up in case different validation failed
     // 400 is the default animation speed
     $("#tweet-error").slideUp(400, () => {
